@@ -4,11 +4,17 @@ const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/cl
 const { Upload } = require('@aws-sdk/lib-storage');
 const { ListObjectsV2Command, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const cors = require('cors')
 
 const app = express();
 require('dotenv').config();
 // Configure AWS
 console.log(process.env.ACCESS_KEY)
+const corsOptions = {
+  origin: '*', // or use '*' to allow all origins
+  methods: ['GET', 'POST', 'DELETE'],
+};
+app.use(cors(corsOptions))
 
 const s3Client = new S3Client({
   region: process.env.REGION,
